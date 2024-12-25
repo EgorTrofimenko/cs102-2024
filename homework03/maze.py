@@ -18,6 +18,22 @@ def remove_wall(
     :param coord:
     :return:
     """
+<<<<<<< homework04
+=======
+    x, y, len_col, len_row = coord[0], coord[1], len(grid) - 1, len(grid[0]) - 1
+    directions = ["up", "right"]
+    direction = choice(directions)
+    if direction == "up" and (0 <= x - 2 < len_col) and (0 <= y < len_row):
+        grid[x - 1][y] = " "
+    else:
+        direction = "right"
+
+    if direction == "right":
+        if (0 <= x < len_col) and (0 <= y + 2 < len_row):
+            grid[x][y + 1] = " "
+        elif (0 <= x - 2 < len_col) and (0 <= y < len_row):
+            grid[x - 1][y] = " "
+>>>>>>> local
 
     pass
 
@@ -92,7 +108,31 @@ def shortest_path(
     :param exit_coord:
     :return:
     """
+<<<<<<< homework04
     pass
+=======
+    selected_coord, k, len_of_path = exit_coord, grid[exit_coord[0]][exit_coord[1]], grid[exit_coord[0]][exit_coord[1]]
+    coords = [(x, y) for x, row in enumerate(grid) for y, _ in enumerate(row)]
+    path = [selected_coord]
+
+    while grid[selected_coord[0]][selected_coord[1]] != 1:
+        near_to = [
+            (selected_coord[0] - 1, selected_coord[1]),
+            (selected_coord[0] + 1, selected_coord[1]),
+            (selected_coord[0], selected_coord[1] - 1),
+            (selected_coord[0], selected_coord[1] + 1),
+        ]
+        for x, y in near_to:
+            if (x, y) in coords and grid[x][y] == k - 1:
+                path.append((x, y))
+                selected_coord = (x, y)
+                k -= 1
+                break
+    if len(path) != len_of_path:
+        grid[selected_coord[0]][selected_coord[1]] = " "
+        shortest_path(grid, exit_coord)
+    return path
+>>>>>>> local
 
 
 def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
