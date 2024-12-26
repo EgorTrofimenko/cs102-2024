@@ -23,9 +23,10 @@ def remove_wall(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> Li
         grid[x - 1][y] = " "
     else:
         direction = "right"
-    if (direction == "right") and ((0 <= x < len_col) and (0 <= y + 2 < len_row)):
-        grid[x][y + 1] = " "
-    elif (direction == "right") and ((0 <= x - 2 < len_col) and (0 <= y < len_row)):
+
+    if direction == "right" and (0 <= x < len_col and 0 <= y + 2 < len_row):
+            grid[x][y + 1] = " "
+    elif 0 <= x - 2 < len_col and 0 <= y < len_row:
         grid[x - 1][y] = " "
 
     return grid
@@ -101,8 +102,8 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
             (selected_coord[0], selected_coord[1] + 1),
         ]
         new_coords = [(x, y) for x, row in enumerate(grid) for y, _ in enumerate(row)]
-        for x, y in new_coords:
-            if (x, y) in near_to and grid[x][y] == 0:
+        for x, y in near_to:
+            if (x, y) in new_coords and grid[x][y] == 0:
                 grid[x][y] = k
     return grid
 
@@ -150,7 +151,8 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     x, y, len_row, len_col = coord[0], coord[1], len(grid) - 1, len(grid[0]) - 1
     angles = [(0, 0), (0, len_col), (len_row, 0), (len_row, len_col)]
     if coord in angles:
-        return True
+        if grid[abs(x - 1)][y] == "■" and grid[x][abs(y - 1)] == "■":
+            return True
     if x in [0, len_row]:
         if grid[x][y - 1] == "■" and grid[x][y + 1] == "■" and grid[abs(x - 1)][y] == "■":
             return True
@@ -202,6 +204,10 @@ def add_path_to_grid(
             for j, _ in enumerate(row):
                 if (i, j) in path:
                     grid[i][j] = "X"
+        for i, row in enumerate(grid):
+            for j, _ in enumerate(row):
+                if isinstance(grid[i][j], int):
+                    grid[i][j] = " "
     return grid
 
 
