@@ -149,6 +149,7 @@ class GameOfLife:
             clock.tick(self.speed)
         pygame.quit()
 
+
 if __name__ == "__main__":
     game = GameOfLife(320, 240, 20)
     game.run()
