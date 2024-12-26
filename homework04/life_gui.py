@@ -1,9 +1,10 @@
 """Game of life"""
 
 import pygame
+from life import GameOfLife
 from pygame import QUIT
 
-from life import GameOfLife
+
 from ui import UI
 
 
@@ -104,7 +105,7 @@ class GUI(UI):
             clock.tick(self.speed)
         pygame.quit()
 
-
-life = GameOfLife((30, 40), max_generations=500)
-ui = GUI(life)
-ui.run()
+if __name__ == "__main__":
+    life = GameOfLife((30, 40), max_generations=500)
+    ui = GUI(life)
+    ui.run()
